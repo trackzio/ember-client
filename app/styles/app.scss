@@ -1,0 +1,133 @@
+html, body {
+    margin:0px;
+    padding:0px;
+    font-family: 'Lato', sans-serif;
+    background-color: #333;
+    color:#fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-size:cover;
+  background-image:url(http://adtime.at/projects/trackz/images/bg_map.jpg);
+  background-position:fixed;
+}
+
+h1{font-weight:400;font-size:30px}
+
+.gangsta-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0 60px;
+  transition:padding 500ms ease;
+}
+
+header {
+  display: block;
+  font-size: 30px;
+  line-height: 65px;
+  .logo {
+  	float: left;
+    padding-top: 17px;
+  }
+  span {
+  	float:left;
+    padding-left: 10px;
+  }
+}
+
+footer {
+  display: block;
+  font-size: 15px;
+  line-height: 65px;
+  .mashable {
+    margin-bottom: -2px;
+  }
+}
+
+.centeredBtn {
+  position:absolute;
+  top:50%;
+  left:50%;
+  display:block;
+  border: 1px solid white;
+  padding:20px 30px;
+  margin-left:-86px;
+  margin-top:-20px;
+  font-size:30px;
+  text-decoration:none;
+  color:#fff;
+  border-radius:5%;
+}
+
+.track__container {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+.track__container-map {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 66.6666%;
+  opacity: 0.65;
+}
+.track__container-map >* {
+  flex: 1 1 0;
+}
+
+.track__sidebar {
+	display: flex;
+  flex-direction: column;
+  flex: 1 1 33.33333%;
+}
+.track__sidebar-body {
+	padding:0 20px 20px 20px;
+  overflow-y:auto;
+  word-wrap:break-word;
+  p {
+    font-size:20px;
+    font-weight:200;
+  }
+}
+
+.map-canvas {
+    height: 100%;
+    max-width:850px;
+    width: 100%;
+  }
+
+@media only screen and (max-width:850px) {
+  .gangsta-wrapper{
+    display:block;
+    height:100%;
+  }
+  .track__container {
+    display: block;
+  }
+  .track__container-map {
+    display: block;
+  }
+  .track__sidebar-body {
+    padding: 10px 0 0;
+  }
+  
+  .map-canvas {
+    height: 500px;
+    max-width:850px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width:685px) {
+  .gangsta-wrapper {
+    padding: 0 10px;
+  }
+
+  .map-canvas {
+    height: 360px;
+    max-width:685px;
+  width: 100%;
+  }
+}

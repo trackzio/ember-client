@@ -2,6 +2,9 @@
 
 First example of how you can use the trackz.io service combined with emberjs.
 
+## Preview
+![Ember TrackZ Preview](http://trackz.io/images/ember-screen.jpg)
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.

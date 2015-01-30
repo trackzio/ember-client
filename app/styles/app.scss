@@ -7,16 +7,13 @@ html, body {
 }
 
 body {
-  width:100%;
-  min-height:100%;
   position:absolute;
-  top:0;
-  left:0;
+  min-height:100%;
+  width:100%;
   margin: 0;
   padding: 0;
   background-size:cover;
   background-image:url(http://adtime.at/projects/trackz/images/bg_map.jpg);
-  background-position:fixed;
 }
 
 h1{font-weight:400;font-size:30px}

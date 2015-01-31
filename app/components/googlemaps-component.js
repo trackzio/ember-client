@@ -15,53 +15,50 @@ export default Ember.Component.extend({
 			styles:[{"featureType":"water","stylers":[{"visibility":"on"},{"color":"#acbcc9"}]},{"featureType":"landscape","stylers":[{"color":"#f2e5d4"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"administrative","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"road"},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{},{"featureType":"road","stylers":[{"lightness":20}]}]
 		};
 		this.set('map', new google.maps.Map(container[0], options));
+		this.schedule();
 	}.on('didInsertElement'),
 
-	setMarkers: function() {
-		var _self = this;
-		setTimeout(function (){
-			var map = _self.get('map'),
-			markers = _self.get('markers'),
-			latitude = "48.311196",
-			longitude = "14.29829";
-			var polygonCoords = [];
-			var old = _self.get('lastMarker');
-			// set first marker
-			/*var gMapsMarker = new google.maps.Marker({
-				position: new google.maps.LatLng(markers.get('firstObject').get('latitude'), markers.get('firstObject').get('longitude')),
-				map: map,
-				icon: 'http://adtime.at/img/marker30x30.png'
-			});*/
+	schedule: function() {
+		this._timer = Ember.run.later(this, 'setMarkers', 1000);
+	},
 
-			// fill up middle points with polylines
-			markers.forEach(function(marker){
-				if(typeof(marker.get('latitude')) !== "undefined" && typeof(marker.get('longitude')) !== "undefined" ) {
-					polygonCoords.push(new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')));
-					latitude = marker.get('latitude');
-					longitude = marker.get('longitude');
-				}
-			}, this);
-			// trigger setPolyline
-			_self.set('polygonCoords', polygonCoords);
-			
-			// set last marker
-			_self.set('lastMarker', new google.maps.Marker({
-				position: new google.maps.LatLng(latitude, longitude),
-				map: map,
-				icon: 'http://adtime.at/img/marker30x30.png'
-			}));
-			setTimeout(function (){
-				if(old) {
-					old.setMap(null);
-				}
-			}, 500);
-			// center map on last marker
-			if(_self.firstTime){
-				map.setCenter(new google.maps.LatLng(latitude, longitude));
-				_self.firstTime = false;
+	setMarkers: function() {
+		var map = this.get('map'),
+			markers = this.get('markers'),
+			latitude = "48.311196",
+			longitude = "14.29829",
+			polygonCoords = [],
+			old = this.get('lastMarker');
+
+		// fill up middle points with polylines
+		markers.forEach(function(marker){
+			if(typeof(marker.get('latitude')) !== "undefined" && typeof(marker.get('longitude')) !== "undefined" ) {
+				polygonCoords.push(new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')));
+				latitude = marker.get('latitude');
+				longitude = marker.get('longitude');
 			}
-		}, 500);
-	}.observes('markers.@each.latitude', 'markers.@each.longitude'),
+		}, this);
+		// trigger setPolyline
+		this.set('polygonCoords', polygonCoords);
+		
+		// set last marker
+		this.set('lastMarker', new google.maps.Marker({
+			position: new google.maps.LatLng(latitude, longitude),
+			map: map,
+			icon: 'http://adtime.at/img/marker30x30.png'
+		}));
+
+		if (old) {
+			old.setMap(null);
+		}
+
+		if(this.firstTime){
+			map.setCenter(new google.maps.LatLng(latitude, longitude));
+			this.firstTime = false;
+		}
+
+		this.schedule();
+	},
 
 	setPolyline: function(){
 		this.polyline = new google.maps.Polyline({

@@ -40,16 +40,16 @@ export default Ember.Component.extend({
 		}, this);
 		// trigger setPolyline
 		this.set('polygonCoords', polygonCoords);
-		
-		// set last marker
-		this.set('lastMarker', new google.maps.Marker({
-			position: new google.maps.LatLng(latitude, longitude),
-			map: map,
-			icon: 'http://adtime.at/img/marker30x30.png'
-		}));
 
 		if (old) {
-			old.setMap(null);
+			old.setPosition(new google.maps.LatLng(latitude, longitude));
+		} else {
+			// set last marker
+			this.set('lastMarker', new google.maps.Marker({
+				position: new google.maps.LatLng(latitude, longitude),
+				map: map,
+				icon: 'http://adtime.at/img/marker30x30.png'
+			}));
 		}
 
 		if(this.firstTime){
